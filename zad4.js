@@ -2,17 +2,19 @@
   this.name = name;
   this.power = power;
  }
-   Technika.prototype={
-    buttonOn : function (){
-    console.log (`${this.name} находится в режиме "Включено"`);
-    },
-    buttonOff : function(){
-    console.log(`${this.name} находится в режиме "Выключено"`);
-    },
-    showPower : function() {
-    console.log(`Мощность ${this.name} составляет ${this.power} Ватт`);
-    }
-  };
+
+Technika.prototype.buttonOn = function (){
+  console.log (`${this.name} находится в режиме "Включено"`);
+}
+
+Technika.prototype.buttonOff = function (){
+  console.log(`${this.name} находится в режиме "Выключено"`);
+}
+
+Technika.prototype.showPower = function (){
+  console.log(`Мощность ${this.name} составляет ${this.power} Ватт`);
+}
+
 //создаем функцию конструктор музыкальных центров
 function MusicCenter (name,power,soundSystem) {
   this.name =name;
@@ -20,7 +22,7 @@ function MusicCenter (name,power,soundSystem) {
   this.soundSystem = soundSystem;
   }
 
-MusicCenter.prototype = Object.create(Technika.prototype);
+MusicCenter.prototype = new Technika();
   MusicCenter.prototype.eject = function () {
     console.log (`Извлечь диск в ${this.name}`);
 };
@@ -48,7 +50,7 @@ function CoffeeMachine (name, capacity, pressure ) {
   }
 
 
-CoffeeMachine.prototype = Object.create(Technika.prototype);
+CoffeeMachine.prototype = new Technika();
   CoffeeMachine.prototype.clean = function () {
     console.log (`В ${this.name} переполнена емкость, очистите бак`);
 };
@@ -96,5 +98,7 @@ const сoffeeMachine = new CoffeeMachine('Bosch', 50, 'DolbySurround 5.1') ;
 сoffeeMachine.temperature(99); 
 console.log('Вместимость '+ сoffeeMachine.name + ' составляет ' + сoffeeMachine.capacity +' чашек'); 
 
-
-
+// В задании есть несколько недочетов:
+// 1. Методы в конструктор Technika записываются неправильно. Вы переписали целый объект constructor, записав туда свой объект с методами. Переписывать системные свойства небезопасно, потому что вы можете стереть важную информацию или функционал, заложенные в этот объект. Методы нужно добавлять к constructor, не переписывать целый объект. В конструкторах MusicCenter и CoffeeMachine это сделано правильно.
+// 2. Прототип для MusicCenter и CoffeeMachine также задан не совсем правильно. Например, в этой строчке - MusicCenter.prototype = Object.create(Technika.prototype) - вы создаете пустой объект с прототипом Technika и записываете его в прототип объекта MusicCenter. Т.е. создается лишнее звено в цепочке прототипов (тот самый пустой объект)
+// Исправила перечисленные ошибки в коде

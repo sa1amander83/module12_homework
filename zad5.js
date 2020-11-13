@@ -16,8 +16,7 @@ class Techika {
 //создаем функцию конструктор музыкальных центров
 class MusicCenter extends Techika {
   constructor(name, power, soundSystem) {
-  super (name);
-  this.power = power;
+  super (name, power);
   this.soundSystem = soundSystem;
   }
 
@@ -100,5 +99,4 @@ const сoffeeMachine = new CoffeeMachine('Bosch', 50, 'DolbySurround 5.1');
   console.log('Цвет '+ сoffeeMachine.name+ ' - '+ сoffeeMachine.color);
 //Цвет Bosch - черный
 
-
-
+// Здесь уже меньше ошибок, чем в предыдущем задании и по большому счету всё сделано верно :) но есть небольшое замечание - у вас в родительском конструкторе записываются атрибуты name и power, и в дочернем классе MusicCenter вы передаете в super только name, но не power, что не очень логично, т.к. ниже вы точно так же, как в родительском конструкторе, записываете и power. В таком случае можно просто передать этот параметр в родительский конструктор и не писать один и тот же код несколько раз.
